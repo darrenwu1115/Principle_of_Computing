@@ -1,0 +1,55 @@
+"""
+Merge function for 2048 game.
+"""
+
+def simple_move(line):
+    '''
+    Function that simply move number from right to left and 
+    complete the line with zero
+    '''
+    simple_moved_line = []
+    for dummy_index in range(0, len(line)):
+        if line[dummy_index] <> 0:
+            simple_moved_line.append(line[dummy_index])
+    while len(simple_moved_line) < len(line):
+        simple_moved_line.append(0)
+    return simple_moved_line
+
+def simple_merge(line):
+    '''
+    Create function simple_merge to merge numbers based on game 
+    rule but does not move the tile.
+    '''
+    
+    simple_merge = []
+    merge_count = []
+    
+    for dummy_index in range(0, len(line)):
+        merge_count.append(0)
+        
+    for dummy_index in range(1 , len(line)):
+        if merge_count[dummy_index - 1] == 0:
+            if line[dummy_index] == line[dummy_index - 1]:
+                simple_merge.append(line[dummy_index - 1] * 2)
+                merge_count[dummy_index] += 1
+            else:
+                simple_merge.append(line[dummy_index - 1])
+        else:
+            simple_merge.append(0)
+            
+    if merge_count[-1] == 0:
+        simple_merge.append(line[dummy_index])
+    else:
+        simple_merge.append(0)
+    
+    return simple_merge
+
+def merge(line):
+    """
+    Function that merges a single row or column in 2048.
+    """
+    line_phase_one = simple_move(line)
+    line_phase_two = simple_merge(line_phase_one)
+    line_phase_three = simple_move(line_phase_two)
+    
+    return line_phase_three
